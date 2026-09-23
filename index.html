@@ -4,32 +4,94 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Central de Justificativas - Shopee Xpress</title>
-<meta http-equiv="refresh" content="2;url=https://script.google.com/a/macros/shopee.com/s/AKfycbxRxXDGBM5UE2cUs9K1z3Uw8P9kcsOsa_o1ypkAuhJWSnIEjrY2eiesh1cwIf_0zaq0/exec">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f5f5f5;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.header{background:linear-gradient(135deg,#EE4D2D,#D73A1F);color:#fff;padding:20px;text-align:center;width:100%;position:fixed;top:0}
-.header h1{font-size:20px}
-.header p{font-size:13px;opacity:.9;margin-top:4px}
-.container{text-align:center;padding:40px 20px;max-width:500px}
-.spinner{width:50px;height:50px;border:5px solid #f3f3f3;border-top:5px solid #EE4D2D;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 24px}
-@keyframes spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}
-h2{color:#333;font-size:18px;margin-bottom:12px}
-p{color:#666;font-size:15px;line-height:1.6}
-a{color:#EE4D2D;text-decoration:none;font-weight:600}
-a:hover{text-decoration:underline}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f5f5f5;min-height:100vh}
+.header{background:linear-gradient(135deg,#EE4D2D,#D73A1F);color:#fff;padding:20px;text-align:center}
+.header h1{font-size:20px}.header p{font-size:13px;opacity:.9;margin-top:4px}
+.container{max-width:600px;margin:0 auto;padding:20px}
+.search-box{background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.08);margin-bottom:20px}
+.search-box label{display:block;font-weight:600;color:#333;margin-bottom:10px}
+.search-row{display:flex;gap:10px}
+.search-row input{flex:1;padding:14px;border:2px solid #e0e0e0;border-radius:8px;font-size:16px;outline:none}
+.search-row input:focus{border-color:#EE4D2D}
+.search-row button{padding:14px 24px;background:#EE4D2D;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer}
+.search-row button:hover{background:#D73A1F}
+.alert-banner{background:#FFF3CD;border-left:4px solid #FF9800;border-radius:8px;padding:16px;margin-bottom:20px;display:none}
+.alert-banner.danger{background:#FDECEA;border-left-color:#D32F2F}
+.alert-banner .alert-text{font-size:14px;color:#333;line-height:1.5}
+.alert-banner .alert-text strong{color:#D32F2F}
+.driver-info{background:#fff;border-radius:12px;padding:16px;margin-bottom:20px;display:none}
+.driver-info h3{color:#333}.driver-info span{color:#777;font-size:13px}
+.card{background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.08);border-left:4px solid #EE4D2D}
+.card.justified{border-left-color:#4CAF50;opacity:.7}
+.card-header{display:flex;justify-content:space-between;margin-bottom:12px}
+.card-date{font-size:13px;color:#EE4D2D;font-weight:600;background:#FFF0ED;padding:4px 10px;border-radius:20px}
+.card.justified .card-date{color:#4CAF50;background:#E8F5E9}
+.card-status{font-size:12px;padding:4px 10px;border-radius:20px;font-weight:600}
+.status-pending{background:#FFF3CD;color:#E65100}
+.status-done{background:#E8F5E9;color:#2E7D32}
+.card-body p{font-size:14px;color:#555;margin-bottom:8px}
+.card-body p strong{color:#333}
+.card-body .occurrence{background:#FFF8E1;border-radius:8px;padding:10px;margin:10px 0;font-size:13px;color:#E65100;border:1px solid #FFE082}
+.btn-justify{display:block;margin-top:12px;width:100%;padding:12px;background:#EE4D2D;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;text-align:center;text-decoration:none}
+.btn-justify:hover{background:#D73A1F}
+.justified-text{background:#E8F5E9;border-radius:8px;padding:10px;margin-top:10px;font-size:13px;color:#2E7D32;border:1px solid #C8E6C9}
+.empty-state{text-align:center;padding:40px;display:none}
+.empty-state .icon{font-size:48px;margin-bottom:12px}
+.results-container{display:none}
+.warning-box{background:#FDECEA;border:1px solid #FFCDD2;border-radius:8px;padding:14px;margin-bottom:16px;display:none}
+.warning-box p{font-size:13px;color:#C62828;line-height:1.5}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#D32F2F;color:#fff;padding:14px 24px;border-radius:8px;font-size:14px;z-index:1000;display:none}
+.update-note{background:#E3F2FD;border:1px solid #90CAF9;border-radius:8px;padding:12px;margin-bottom:20px;font-size:12px;color:#1565C0;text-align:center}
 </style>
 </head>
 <body>
 <div class="header"><h1>Central de Justificativas</h1><p>Sistema de Ocorrencias - Shopee Xpress</p></div>
 <div class="container">
-<div class="spinner"></div>
-<h2>Redirecionando...</h2>
-<p>Voce sera redirecionado automaticamente para o aplicativo de justificativas.</p>
-<p style="margin-top:16px"><a href="https://script.google.com/a/macros/shopee.com/s/AKfycbxRxXDGBM5UE2cUs9K1z3Uw8P9kcsOsa_o1ypkAuhJWSnIEjrY2eiesh1cwIf_0zaq0/exec">Clique aqui se nao for redirecionado</a></p>
+<div class="update-note">Dados atualizados em: 23/09/2026 11:30</div>
+<div class="search-box"><label>Digite seu ID de Motorista</label><div class="search-row"><input type="text" id="did" placeholder="Ex: 3666540" inputmode="numeric"><button onclick="search()">Buscar</button></div></div>
+<div id="ab" class="alert-banner"><span class="alert-text" id="at"></span></div>
+<div id="wb" class="warning-box"><p><strong>Atencao:</strong> Se a mesma ocorrencia seguir por <strong>4 dias consecutivos</strong>, o motorista pode sofrer <strong>remocao da loja ou da rota</strong>.</p></div>
+<div id="di" class="driver-info"><h3 id="dn"></h3><span id="dd"></span></div>
+<div id="es" class="empty-state"><div class="icon">OK</div><p>Nenhuma justificativa encontrada para este ID.</p></div>
+<div id="rc" class="results-container"></div>
 </div>
+<div id="toast" class="toast"></div>
 <script>
-setTimeout(function(){window.location.href='https://script.google.com/a/macros/shopee.com/s/AKfycbxRxXDGBM5UE2cUs9K1z3Uw8P9kcsOsa_o1ypkAuhJWSnIEjrY2eiesh1cwIf_0zaq0/exec'},2000);
+var FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSdMfEA0Hz0HZeYgl7zOq3mm9edHFeYXdwCZmQlGxG1__2pqTw/viewform';
+var ENTRY_ID='entry.946805376';
+var ENTRY_ROW='entry.1635351128';
+var ENTRY_JUST='entry.1855686972';
+var DATA=[
+{r:2,id:"34017",dt:"22/09/2026",loja:"Anselbinii",end:"RUA ROQUETE PINTO, 13 - PARADA MORABI - DUQUE DE CAXIAS - CEP:25265200",oc:"Agencia Shopee com 18 pacotes sem coleta. Motorista saiu antes do horario.",nome:"Raphael mota Carvalho",just:""},
+{r:3,id:"152393",dt:"22/09/2026",loja:"ON OCEAN",end:"AVENIDA DUQUE DE CAXIAS, 515 - LOJA B",oc:"Baixa fora do raio. Horario de visita antes das 18:00.",nome:"LUIZ CARLOS DE SOUZA TELES",just:""},
+{r:4,id:"152393",dt:"22/09/2026",loja:"TEMTUDO.SHOPEE",end:"Avenida Brasil, 245, Vila Sao Luis, Duque de Caxias",oc:"Baixa fora do raio, motorista nao visitou a loja.",nome:"LUIZ CARLOS DE SOUZA TELES",just:""},
+{r:5,id:"177962",dt:"22/09/2026",loja:"CATPINK",end:"AVENIDA ANA DANTAS, 1779 - APTO 403 BLOCO 07",oc:"Baixa fora do raio, motorista nao visitou a loja.",nome:"Vitor Gabriel de Oliveira Marques",just:""},
+{r:6,id:"681140",dt:"22/09/2026",loja:"Gisele Magalhaes Soares Tavares",end:"ESTRADA VELHA DO PILAR 22 - CHACARAS RIO-PETROPOLIS",oc:"Agencia Shopee com 38 pacotes sem coleta. Motorista saiu antes do horario.",nome:"JONATHAN LIMA RODRIGUES",just:""},
+{r:7,id:"681140",dt:"22/09/2026",loja:"Cura De Docura",end:"RUA UBATA, 0 - JARDIM ANHANGA - DUQUE DE CAXIAS",oc:"Agencia Shopee com 2 pacotes sem coleta. Motorista saiu antes do horario.",nome:"JONATHAN LIMA RODRIGUES",just:""},
+{r:8,id:"1642608",dt:"22/09/2026",loja:"Aline Chaves dos Santos de Lima",end:"Rua Marapanim, 18 - Parque Chuno, Duque de Caxias",oc:"Agencia Shopee com 61 pacotes sem coleta. Motorista saiu antes do horario.",nome:"MARCOS PAULO SANTOS FILHO",just:""},
+{r:9,id:"1642608",dt:"22/09/2026",loja:"DELTANACESSORIOSLTDA",end:"Rua L, 161, CAXIAS PARK 1 DOCA 25, Nova Campinas, Duque de Caxias",oc:"Baixa fora do raio, motorista nao visitou a loja.",nome:"MARCOS PAULO SANTOS FILHO",just:""},
+{r:10,id:"2624319",dt:"22/09/2026",loja:"UNIVERSOS DOS CABELOS",end:"RUA PAULO DE FRONTIN, 569",oc:"Baixa fora do raio, motorista nao visitou a loja.",nome:"PAULO GUILHERME GOMES DOS SANTOS",just:""},
+{r:11,id:"3666540",dt:"22/09/2026",loja:"CATUPA DISTRIBUIDORA LTDA",end:"Av. Gov. Leonel de Moura Brizola, 1131 - Centro, Duque de Caxias",oc:"Agencia Shopee com 1 pacote sem coleta. Motorista saiu antes do horario.",nome:"RUBEM CORREA",just:""},
+{r:12,id:"3693272",dt:"22/09/2026",loja:"DAP MATERIAIS DE CONSTRUCAO",end:"AVENIDA MARQUES DE BAEPENDI, 61",oc:"Baixa fora do raio. Horario de visita antes das 18:00.",nome:"DEIVISON INOCENCIO ESTEVAM MACEDO",just:""},
+{r:13,id:"3853215",dt:"22/09/2026",loja:"JZ MOTOPECAS",end:"AVENIDA ACTURA, 583 - JZ MOTOPECAS",oc:"Baixa fora do raio. Horario de visita antes das 18:00.",nome:"MARCELO FERNANDO ALVES LIBERATO",just:""},
+{r:14,id:"3975583",dt:"22/09/2026",loja:"50.724.462 LUCAS TENORIO BARBOSA",end:"Av. Eng. Benjamin Dumont, 211 - Xerem, Duque de Caxias",oc:"Agencia Shopee com 10 pacotes sem coleta. Motorista saiu antes do horario.",nome:"LUCAS VIEIRA DOS PRAZERES",just:""}
+];
+document.getElementById('did').addEventListener('keypress',function(e){if(e.key==='Enter')search()});
+function search(){var id=document.getElementById('did').value.trim();if(!id){document.getElementById('toast').textContent='Digite um ID';document.getElementById('toast').style.display='block';setTimeout(function(){document.getElementById('toast').style.display='none'},2500);return}
+['ab','di','wb','es','rc'].forEach(function(x){document.getElementById(x).style.display='none'});
+var items=DATA.filter(function(d){return d.id===id});
+if(!items.length){document.getElementById('es').style.display='block';return}
+var dn=items[0].nome;if(dn){document.getElementById('dn').textContent=dn;document.getElementById('dd').textContent='ID: '+id;document.getElementById('di').style.display='block'}
+var pending=items.filter(function(i){return !i.just});
+var justified=items.filter(function(i){return i.just});
+if(pending.length>0){var ab=document.getElementById('ab'),at=document.getElementById('at');ab.style.display='block';ab.className=pending.length>=3?'alert-banner danger':'alert-banner';at.innerHTML='Voce possui <strong>'+pending.length+' justificativa(s) pendente(s)</strong> e tem apenas <strong>1 dia</strong> para responde-las.'+(pending.length>=3?' <strong>URGENTE!</strong>':'');document.getElementById('wb').style.display='block'}
+var c=document.getElementById('rc');c.innerHTML='';var all=pending.concat(justified);
+for(var x=0;x<all.length;x++){var item=all[x];var ip=!item.just;var card=document.createElement('div');card.className='card'+(ip?'':' justified');
+var formLink=FORM_URL+'?'+ENTRY_ID+'='+encodeURIComponent(item.id)+'&'+ENTRY_ROW+'='+encodeURIComponent(item.r);
+card.innerHTML='<div class="card-header"><span class="card-date">'+item.dt+'</span><span class="card-status '+(ip?'status-pending':'status-done')+'">'+(ip?'Pendente':'Justificado')+'</span></div><div class="card-body"><p><strong>Loja:</strong> '+item.loja+'</p><p><strong>Endereco:</strong> '+item.end+'</p><div class="occurrence"><strong>Ocorrencia:</strong> '+item.oc+'</div>'+(ip?'<a href="'+formLink+'" target="_blank" class="btn-justify">Enviar Justificativa</a>':'<div class="justified-text"><strong>Justificativa:</strong> '+item.just+'</div>')+'</div>';
+c.appendChild(card)}c.style.display='block'}
 </script>
 </body>
 </html>
