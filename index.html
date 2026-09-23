@@ -35,8 +35,12 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f5f5f5;min-height:100v
 .card-body p{font-size:14px;color:#555;margin-bottom:8px}
 .card-body p strong{color:#333}
 .card-body .occurrence{background:#FFF8E1;border-radius:8px;padding:10px;margin:10px 0;font-size:13px;color:#E65100;border:1px solid #FFE082}
-.btn-justify{display:block;margin-top:12px;width:100%;padding:12px;background:#EE4D2D;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;text-align:center;text-decoration:none}
+.justify-area{margin-top:12px}
+.justify-area textarea{width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:8px;font-size:14px;resize:vertical;min-height:80px;outline:none;font-family:inherit}
+.justify-area textarea:focus{border-color:#EE4D2D}
+.btn-justify{display:block;margin-top:8px;width:100%;padding:12px;background:#EE4D2D;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;text-align:center}
 .btn-justify:hover{background:#D73A1F}
+.btn-justify:disabled{background:#ccc;cursor:not-allowed}
 .justified-text{background:#E8F5E9;border-radius:8px;padding:10px;margin-top:10px;font-size:13px;color:#2E7D32;border:1px solid #C8E6C9}
 .loading{text-align:center;padding:40px;display:none}
 .loading .spinner{width:40px;height:40px;border:4px solid #f3f3f3;border-top:4px solid #EE4D2D;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
@@ -63,18 +67,16 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f5f5f5;min-height:100v
 </div>
 <div id="toast" class="toast"></div>
 <script>
-var SHEET_ID='141zh30kgmtqq-OPcvIDgeZWM-G6yvTpw6bNFV7aZIvM';
+var SHEET_ID='1w4XtjLJd-xqvB2G1Qc4Zdj0IXMNH7Da_ZA4ZGXgOA5g';
 var SHEET_URL='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:json&sheet=Analise%20App';
-var FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSdMfEA0Hz0HZeYgl7zOq3mm9edHFeYXdwCZmQlGxG1__2pqTw/viewform';
-var EID='entry.946805376';
-var EROW='entry.1635351128';
+var APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxRxXDGBM5UE2cUs9K1z3Uw8P9kcsOsa_o1ypkAuhJWSnIEjrY2eiesh1cwIf_0zaq0/exec';
 document.getElementById('did').addEventListener('keypress',function(e){if(e.key==='Enter')search()});
-function toast(m,t){var s=document.getElementById('toast');s.textContent=m;s.className='toast '+(t||'');s.style.display='block';setTimeout(function(){s.style.display='none'},3000)}
+function showToast(m,t){var s=document.getElementById('toast');s.textContent=m;s.className='toast '+(t||'');s.style.display='block';setTimeout(function(){s.style.display='none'},3000)}
 function hideAll(){['ld','es','rc','ab','di','wb'].forEach(function(x){document.getElementById(x).style.display='none'})}
 function search(){
 var id=document.getElementById('did').value.trim();
 var btn=document.getElementById('sbtn');
-if(!id){toast('Digite um ID de motorista','error');return}
+if(!id){showToast('Digite um ID de motorista','error');return}
 hideAll();document.getElementById('ld').style.display='block';
 btn.disabled=true;btn.textContent='Buscando...';
 var cb='cb'+Date.now();
@@ -84,11 +86,11 @@ btn.disabled=false;btn.textContent='Buscar';
 if(resp.status!=='ok'||!resp.table||!resp.table.rows||resp.table.rows.length===0){document.getElementById('es').style.display='block';return}
 var rows=resp.table.rows;var items=[];
 for(var i=0;i<rows.length;i++){var r=rows[i].c;var dv='';if(r[1]&&r[1].f)dv=r[1].f;else if(r[1]&&r[1].v)dv=String(r[1].v);
-items.push({row:i+2,id:r[0]?String(r[0].v):'',date:dv,store:r[2]?r[2].v||'':'',address:r[3]?r[3].v||'':'',occurrence:r[4]?r[4].v||'':'',driverName:r[5]?r[5].v||'':'',justification:r[6]?r[6].v||'':''});}
+items.push({row:i+2,id:r[0]?String(r[0].v):'',date:dv,store:r[2]?r[2].v||'':'',address:r[3]?r[3].v||'':'',occurrence:r[4]?r[4].v||'':'',driverName:r[5]?r[5].v||'':'',justification:r[6]?r[6].v||':''})}
 render(items,id);};
 var s=document.createElement('script');
 s.src=SHEET_URL+'&tq='+encodeURIComponent("select * where A='"+id+"' or A="+id)+'&tqx=out:json;responseHandler:'+cb;
-s.onerror=function(){document.getElementById('ld').style.display='none';btn.disabled=false;btn.textContent='Buscar';toast('Erro de conexao','error');};
+s.onerror=function(){document.getElementById('ld').style.display='none';btn.disabled=false;btn.textContent='Buscar';showToast('Erro de conexao. Verifique se a planilha esta compartilhada.','error');};
 document.head.appendChild(s);}
 function render(items,sid){
 if(!items.length){document.getElementById('es').style.display='block';return}
@@ -98,9 +100,24 @@ var j=items.filter(function(i){return i.justification&&i.justification.trim()});
 if(p.length>0){var ab=document.getElementById('ab'),at=document.getElementById('at');ab.style.display='block';ab.className=p.length>=3?'alert-banner danger':'alert-banner';at.innerHTML='Voce possui <strong>'+p.length+' justificativa(s) pendente(s)</strong> e tem apenas <strong>1 dia</strong> para responde-las.'+(p.length>=3?' <strong>URGENTE!</strong>':'');document.getElementById('wb').style.display='block'}
 var c=document.getElementById('rc');c.innerHTML='';var all=p.concat(j);
 for(var x=0;x<all.length;x++){var item=all[x];var ip=!item.justification||!item.justification.trim();var card=document.createElement('div');card.className='card'+(ip?'':' justified');
-var fl=FORM_URL+'?'+EID+'='+encodeURIComponent(item.id)+'&'+EROW+'='+encodeURIComponent(item.row);
-card.innerHTML='<div class="card-header"><span class="card-date">'+item.date+'</span><span class="card-status '+(ip?'status-pending':'status-done')+'">'+(ip?'Pendente':'Justificado')+'</span></div><div class="card-body"><p><strong>Loja:</strong> '+item.store+'</p><p><strong>Endereco:</strong> '+item.address+'</p><div class="occurrence"><strong>Ocorrencia:</strong> '+item.occurrence+'</div>'+(ip?'<a href="'+fl+'" target="_blank" class="btn-justify">Enviar Justificativa</a>':'<div class="justified-text"><strong>Justificativa:</strong> '+item.justification+'</div>')+'</div>';
-c.appendChild(card)}c.style.display='block'}
+var html='<div class="card-header"><span class="card-date">'+item.date+'</span><span class="card-status '+(ip?'status-pending':'status-done')+'">'+(ip?'Pendente':'Justificado')+'</span></div><div class="card-body"><p><strong>Loja:</strong> '+item.store+'</p><p><strong>Endereco:</strong> '+item.address+'</p><div class="occurrence"><strong>Ocorrencia:</strong> '+item.occurrence+'</div>';
+if(ip){html+='<div class="justify-area"><textarea id="ta_'+item.row+'" placeholder="Digite sua justificativa aqui..."></textarea><button class="btn-justify" id="bj_'+item.row+'" onclick="submitJustification('+item.row+')">Enviar Justificativa</button></div>';}else{html+='<div class="justified-text"><strong>Justificativa:</strong> '+item.justification+'</div>';}
+html+='</div>';card.innerHTML=html;c.appendChild(card)}c.style.display='block'}
+function submitJustification(row){
+var ta=document.getElementById('ta_'+row);
+var btn=document.getElementById('bj_'+row);
+var text=ta.value.trim();
+if(!text){showToast('Digite uma justificativa antes de enviar','error');return}
+btn.disabled=true;btn.textContent='Enviando...';
+var url=APPS_SCRIPT_URL+'?action=justify&row='+row+'&text='+encodeURIComponent(text)+'&sheetId='+SHEET_ID;
+fetch(url,{mode:'no-cors'}).then(function(){
+showToast('Justificativa enviada com sucesso!','success');
+btn.textContent='Enviado!';
+ta.disabled=true;
+setTimeout(function(){search()},2000);
+}).catch(function(){
+showToast('Erro ao enviar. Tente novamente.','error');
+btn.disabled=false;btn.textContent='Enviar Justificativa';});}
 </script>
 </body>
 </html>
