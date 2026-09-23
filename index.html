@@ -66,10 +66,11 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f5f5f5;min-height:100v
 <div id="rc" class="results-container"></div>
 </div>
 <div id="toast" class="toast"></div>
+<iframe name="formFrame" id="formFrame" style="display:none"></iframe>
 <script>
 var SHEET_ID='141zh30kgmtqq-OPcvIDgeZWM-G6yvTpw6bNFV7aZIvM';
 var SHEET_GV='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?sheet=Analise%20App';
-var FORM_POST='https://docs.google.com/forms/d/e/1FAIpQLSdMfEA0Hz0HZeYgl7zOq3mm9edHFeYXdwCZmQlGxG1__2pqTw/formResponse';
+var FORM_ACTION='https://docs.google.com/forms/d/e/1FAIpQLSdMfEA0Hz0HZeYgl7zOq3mm9edHFeYXdwCZmQlGxG1__2pqTw/formResponse';
 var EID='entry.946805376';
 var EROW='entry.1635351128';
 var EJUST='entry.1855686972';
@@ -114,19 +115,22 @@ var btn=document.getElementById('bj_'+row);
 var text=ta.value.trim();
 if(!text){showToast('Digite uma justificativa antes de enviar','error');ta.focus();return}
 btn.disabled=true;btn.textContent='Enviando...';
-var formData=new URLSearchParams();
-formData.append(EID,currentDriverId);
-formData.append(EROW,String(row));
-formData.append(EJUST,text);
-fetch(FORM_POST,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:formData.toString()}).then(function(){
+var form=document.createElement('form');
+form.method='POST';
+form.action=FORM_ACTION;
+form.target='formFrame';
+form.style.display='none';
+var f1=document.createElement('input');f1.name=EID;f1.value=currentDriverId;form.appendChild(f1);
+var f2=document.createElement('input');f2.name=EROW;f2.value=String(row);form.appendChild(f2);
+var f3=document.createElement('input');f3.name=EJUST;f3.value=text;form.appendChild(f3);
+document.body.appendChild(form);
+form.submit();
+document.body.removeChild(form);
 showToast('Justificativa enviada com sucesso!','success');
 btn.textContent='Enviado!';
 ta.disabled=true;
 ta.style.background='#E8F5E9';
-setTimeout(function(){search()},2000);
-}).catch(function(){
-showToast('Erro ao enviar. Tente novamente.','error');
-btn.disabled=false;btn.textContent='Enviar Justificativa';})}
+setTimeout(function(){search()},3000);}
 </script>
 </body>
 </html>
